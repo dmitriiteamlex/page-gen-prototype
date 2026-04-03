@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Corporate Site — Page Gen</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #000; --surface: #191919; --surface-hover: #222; --surface-deep: #0a0a0c;
+      --border: #333; --text-primary: #fff; --text-secondary: #868585;
+      --text-muted: #555; --btn-primary: #ffd955; --btn-primary-hover: #e6c34d;
+      --btn-text: #000; --accent: #d727c6; --tertiary: #cf8eff;
+      --input-bg: #0a0a0c; --input-border: #333; --input-focus: #ffd955;
+      --destructive: #d80303; --success: #0ab95a;
+      --radius: 8px; --radius-lg: 12px; --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+    }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text-primary); min-height: 100vh; }
+    h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+
+    /* ── Header ── */
+    .header { position: sticky; top: 0; z-index: 100; background: rgba(0,0,0,0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .header-inner { max-width: 1100px; margin: 0 auto; padding: 0 32px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; color: var(--text-primary); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+    .logo:focus-visible { outline: 2px solid var(--input-focus); outline-offset: 4px; border-radius: 4px; }
+    .logo-mark { width: 24px; height: 24px; background: var(--btn-primary); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+    .logo-mark svg { width: 14px; height: 14px; color: var(--btn-text); }
+    .header-nav { display: flex; align-items: center; gap: 4px; }
+    .header-nav a { font-size: 14px; color: var(--text-secondary); text-decoration: none; padding: 6px 14px; border-radius: var(--radius); transition: color 0.2s, background 0.2s; }
+    .header-nav a:hover { color: var(--text-primary); background: rgba(255,255,255,0.05); }
+    .header-nav a:focus-visible { outline: 2px solid var(--input-focus); outline-offset: 2px; }
+    .header-nav a.active { color: var(--text-primary); background: rgba(255,255,255,0.08); }
+    .nav-divider { width: 1px; height: 20px; background: var(--border); margin: 0 8px; }
+    .avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: #fff; cursor: pointer; text-decoration: none; transition: opacity 0.2s; }
+    .avatar:hover { opacity: 0.85; }
+    .logout-link { color: var(--text-muted) !important; font-size: 13px !important; }
+    .logout-link:hover { color: var(--destructive) !important; }
+
+    /* ── Main ── */
+    .main { max-width: 1100px; margin: 0 auto; padding: 40px 32px 80px; animation: fadeIn 0.4s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── Breadcrumbs ── */
+    .breadcrumbs { font-size: 13px; color: var(--text-secondary); margin-bottom: 20px; display: flex; align-items: center; gap: 6px; }
+    .breadcrumbs a { color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+    .breadcrumbs a:hover { color: var(--text-primary); }
+    .breadcrumbs a:focus-visible { outline: 2px solid var(--input-focus); outline-offset: 2px; border-radius: 2px; }
+    .breadcrumbs .sep { color: var(--text-muted); user-select: none; }
+    .breadcrumbs .current { color: var(--text-muted); }
+
+    /* ── Page Header ── */
+    .page-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; margin-bottom: 36px; }
+    .page-title { font-size: 28px; font-weight: 700; margin-bottom: 6px; }
+    .page-desc { font-size: 14px; color: var(--text-secondary); }
+    .page-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; padding-top: 4px; }
+    .btn { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; padding: 9px 18px; border-radius: var(--radius); border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; transition: all 0.2s; white-space: nowrap; text-decoration: none; }
+    .btn:focus-visible { outline: 2px solid var(--input-focus); outline-offset: 2px; }
+    .btn svg, .btn i { width: 16px; height: 16px; }
+    .btn-primary { background: var(--btn-primary); color: var(--btn-text); font-weight: 600; }
+    .btn-primary:hover { background: #ffe57a; box-shadow: 0 0 20px rgba(255,217,85,0.2); }
+    .btn-outline { background: transparent; color: var(--text-primary); border: 1px solid var(--border); }
+    .btn-outline:hover { border-color: rgba(255,217,85,0.3); background: rgba(255,255,255,0.03); }
+
+    /* ── Template List ── */
+    .section-title { font-size: 14px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; }
+    .template-list { display: flex; flex-direction: column; gap: 12px; }
+    .template-menu-wrap { position: relative; flex-shrink: 0; }
+    .template-row { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; color: inherit; transition: border-color 0.2s, box-shadow 0.2s; cursor: pointer; position: relative; }
+    .template-row:hover { border-color: rgba(255,217,85,0.2); box-shadow: var(--shadow-md); }
+    .template-row:focus-visible { outline: 2px solid var(--input-focus); outline-offset: 2px; }
+    .template-left { flex: 1; min-width: 0; }
+    .template-name { font-size: 16px; font-weight: 600; margin-bottom: 3px; }
+    .template-blocks { font-size: 12px; color: var(--text-secondary); }
+    .template-right { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+    .template-connection { font-size: 12px; color: var(--text-muted); }
+    .template-connection.disconnected { color: var(--destructive); }
+    .template-menu { width: 32px; height: 32px; border-radius: 6px; border: none; background: transparent; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: color 0.2s, background 0.2s; flex-shrink: 0; position: relative; }
+    .template-menu:hover { color: var(--text-primary); background: rgba(255,255,255,0.06); }
+    .template-menu:focus-visible { outline: 2px solid var(--input-focus); outline-offset: 2px; }
+    .template-menu svg, .template-menu i { width: 18px; height: 18px; }
+
+    /* ── Dropdown ── */
+    .dropdown { display: none; position: absolute; top: 36px; right: 0; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 4px; min-width: 160px; z-index: 50; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
+    .dropdown.open { display: block; animation: ddSlide 150ms ease-out; }
+    @keyframes ddSlide { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+    .dropdown-item { display: flex; align-items: center; gap: 8px; padding: 8px 12px; font-size: 13px; color: var(--text-primary); cursor: pointer; border-radius: 6px; transition: background 150ms; border: none; background: none; width: 100%; text-align: left; font-family: 'DM Sans', sans-serif; }
+    .dropdown-item:hover { background: rgba(255,255,255,0.06); }
+    .dropdown-item.danger { color: var(--destructive); }
+    .dropdown-item.danger:hover { background: rgba(216,3,3,0.08); }
+    .dropdown-item i { width: 16px; height: 16px; }
+
+    /* ── Skeleton ── */
+    .skeleton-row { height: 64px; background: linear-gradient(90deg, var(--surface) 25%, #222 50%, var(--surface) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 10px; margin-bottom: 12px; }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .header-inner { padding: 0 16px; }
+      .main { padding: 28px 16px 60px; }
+      .page-header { flex-direction: column; gap: 16px; }
+      .page-actions { width: 100%; }
+      .btn { flex: 1; justify-content: center; }
+      .template-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .template-right { width: 100%; justify-content: space-between; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="dashboard.html" class="logo">
+        <div class="logo-mark"><i data-lucide="zap"></i></div>
+        Page Gen
+      </a>
+      <nav class="header-nav">
+        <a href="dashboard.html" class="active">Проекты</a>
+        <a href="settings.html">Настройки</a>
+        <div class="nav-divider"></div>
+        <a href="settings.html" class="avatar" title="Настройки профиля">ДП</a>
+        <a href="login.html" class="logout-link">Выйти</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <div class="main">
+    <div class="breadcrumbs">
+      <a href="dashboard.html">Dashboard</a>
+      <span class="sep">/</span>
+      <span class="current">Corporate Site</span>
+    </div>
+
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Corporate Site</h1>
+        <p class="page-desc">Корпоративный сайт компании</p>
+      </div>
+      <div class="page-actions">
+        <button class="btn btn-primary" onclick="showModal('new-template')">
+          <i data-lucide="plus"></i> Новый шаблон
+        </button>
+        <button class="btn btn-outline" onclick="showModal('connections')">
+          <i data-lucide="link"></i> Подключения
+        </button>
+      </div>
+    </div>
+
+    <div class="section-title">Шаблоны <span style="color:var(--text-muted);font-weight:400">3</span></div>
+
+    <div id="mainContent" data-state-container>
+      <div data-state="loading" style="display:none">
+        <div class="skeleton-row"></div>
+        <div class="skeleton-row"></div>
+        <div class="skeleton-row"></div>
+      </div>
+      <div data-state="content">
+        <div class="template-list">
+          <div class="template-row" onclick="location.href='editor.html'">
+            <div class="template-left">
+              <div class="template-name">Главная страница</div>
+              <div class="template-blocks">5 блоков</div>
+            </div>
+            <div class="template-right">
+              <span class="template-connection">API: cms-api.example.com</span>
+              <div class="template-menu-wrap">
+                <button class="template-menu" title="Меню шаблона" onclick="event.stopPropagation(); toggleDropdown(this.parentElement)">
+                  <i data-lucide="more-horizontal"></i>
+                </button>
+                <div class="dropdown">
+                  <button class="dropdown-item" onclick="event.stopPropagation(); closeAllDropdowns(); showToast('Редактирование — демо', 'info')"><i data-lucide="pencil"></i> Редактировать</button>
+                  <button class="dropdown-item" onclick="event.stopPropagation(); closeAllDropdowns(); showToast('Дублировано', 'success')"><i data-lucide="copy"></i> Дублировать</button>
+                  <button class="dropdown-item danger" onclick="event.stopPropagation(); closeAllDropdowns(); confirmDeleteTemplate('Главная страница')"><i data-lucide="trash-2"></i> Удалить</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="template-row" onclick="location.href='editor.html'">
+            <div class="template-left">
+              <div class="template-name">О компании</div>
+              <div class="template-blocks">3 блока</div>
+            </div>
+            <div class="template-right">
+              <span class="template-connection">API: cms-api.example.com</span>
+              <div class="template-menu-wrap">
+                <button class="template-menu" title="Меню шаблона" onclick="event.stopPropagation(); toggleDropdown(this.parentElement)">
+                  <i data-lucide="more-horizontal"></i>
+                </button>
+                <div class="dropdown">
+                  <button class="dropdown-item" onclick="event.stopPropagation(); closeAllDropdowns(); showToast('Редактирование — демо', 'info')"><i data-lucide="pencil"></i> Редактировать</button>
+                  <button class="dropdown-item" onclick="event.stopPropagation(); closeAllDropdowns(); showToast('Дублировано', 'success')"><i data-lucide="copy"></i> Дублировать</button>
+                  <button class="dropdown-item danger" onclick="event.stopPropagation(); closeAllDropdowns(); confirmDeleteTemplate('О компании')"><i data-lucide="trash-2"></i> Удалить</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="template-row" onclick="location.href='editor.html'">
+            <div class="template-left">
+              <div class="template-name">Контакты</div>
+              <div class="template-blocks">2 блока</div>
+            </div>
+            <div class="template-right">
+              <span class="template-connection disconnected">Нет подключения</span>
+              <div class="template-menu-wrap">
+                <button class="template-menu" title="Меню шаблона" onclick="event.stopPropagation(); toggleDropdown(this.parentElement)">
+                  <i data-lucide="more-horizontal"></i>
+                </button>
+                <div class="dropdown">
+                  <button class="dropdown-item" onclick="event.stopPropagation(); closeAllDropdowns(); showToast('Редактирование — демо', 'info')"><i data-lucide="pencil"></i> Редактировать</button>
+                  <button class="dropdown-item" onclick="event.stopPropagation(); closeAllDropdowns(); showToast('Дублировано', 'success')"><i data-lucide="copy"></i> Дублировать</button>
+                  <button class="dropdown-item danger" onclick="event.stopPropagation(); closeAllDropdowns(); confirmDeleteTemplate('Контакты')"><i data-lucide="trash-2"></i> Удалить</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: New Template -->
+  <div class="modal-backdrop" data-modal="new-template">
+    <div class="modal-panel">
+      <div class="modal-title">Новый шаблон</div>
+      <div class="modal-field">
+        <label>Название <span style="color:var(--destructive)">*</span></label>
+        <input type="text" id="newTemplateName" placeholder="Например: Главная страница">
+      </div>
+      <div class="modal-actions">
+        <button class="modal-btn modal-btn-cancel" onclick="closeModal('new-template')">Отмена</button>
+        <button class="modal-btn modal-btn-primary" onclick="createTemplate()">Создать</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Connections -->
+  <div class="modal-backdrop" data-modal="connections">
+    <div class="modal-panel">
+      <div class="modal-title">Подключения</div>
+      <div class="modal-text">API-подключения, используемые шаблонами проекта.</div>
+      <div style="background:var(--surface-deep,#0a0a0c);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:16px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <span style="font-size:14px;font-weight:600">cms-api.example.com</span>
+          <span style="font-size:11px;color:var(--success)">Активно</span>
+        </div>
+        <div style="font-size:12px;color:var(--text-muted)">POST / Authorization: Bearer</div>
+      </div>
+      <div style="background:var(--surface-deep,#0a0a0c);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:20px;opacity:0.5">
+        <div style="font-size:13px;color:var(--text-muted);text-align:center">+ Добавить подключение</div>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-btn modal-btn-cancel" onclick="closeModal('connections')">Закрыть</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Confirm Delete Template -->
+  <div class="modal-backdrop" data-modal="confirm-delete-template">
+    <div class="modal-panel">
+      <div class="modal-title">Удалить шаблон?</div>
+      <div class="modal-text" id="deleteTemplateText">Шаблон и все его блоки будут удалены.</div>
+      <div class="modal-actions">
+        <button class="modal-btn modal-btn-cancel" onclick="closeModal('confirm-delete-template')">Отмена</button>
+        <button class="modal-btn modal-btn-danger" onclick="deleteTemplate()">Удалить</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="components/modals.js"></script>
+  <script src="components/toasts.js"></script>
+  <script src="components/states.js"></script>
+  <script>
+    lucide.createIcons();
+
+    function toggleDropdown(wrap) {
+      const dd = wrap.querySelector('.dropdown');
+      const isOpen = dd.classList.contains('open');
+      closeAllDropdowns();
+      if (!isOpen) dd.classList.add('open');
+    }
+    function closeAllDropdowns() {
+      document.querySelectorAll('.dropdown.open').forEach(d => d.classList.remove('open'));
+    }
+    document.addEventListener('click', () => closeAllDropdowns());
+
+    let deletingTemplate = '';
+    function confirmDeleteTemplate(name) {
+      deletingTemplate = name;
+      document.getElementById('deleteTemplateText').textContent = `Шаблон «${name}» и все его блоки будут удалены. Это действие нельзя отменить.`;
+      showModal('confirm-delete-template');
+    }
+    function deleteTemplate() {
+      closeModal('confirm-delete-template');
+      showToast(`Шаблон «${deletingTemplate}» удалён`, 'success');
+    }
+    function createTemplate() {
+      const name = document.getElementById('newTemplateName').value.trim();
+      if (!name) { document.getElementById('newTemplateName').style.borderColor = 'var(--destructive)'; return; }
+      closeModal('new-template');
+      showToast(`Шаблон «${name}» создан`, 'success');
+      document.getElementById('newTemplateName').value = '';
+    }
+
+    // URL state
+    const params = new URLSearchParams(location.search);
+    const state = params.get('state');
+    if (state) {
+      document.querySelectorAll('#mainContent > [data-state]').forEach(el => {
+        el.style.display = el.dataset.state === state ? 'block' : 'none';
+      });
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        closeAllDropdowns();
+        document.querySelectorAll('.modal-backdrop[style*="display: flex"]').forEach(m => closeModal(m.dataset.modal));
+      }
+    });
+  </script>
+</body>
+</html>
