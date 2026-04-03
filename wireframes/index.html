@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Gen — Wireframes</title>
+  <style>
+    :root { --bg: #FFFFFF; --surface: #F5F5F5; --border: #E0E0E0; --text-primary: #333; --text-secondary: #666; --text-muted: #999; --radius: 12px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #FAFAFA; color: var(--text-primary); }
+    .container { max-width: 1100px; margin: 0 auto; padding: 64px 32px; }
+    h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+    .subtitle { font-size: 16px; color: var(--text-secondary); margin-bottom: 48px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .screen-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; text-decoration: none; color: inherit; transition: border-color 0.15s, box-shadow 0.15s; }
+    .screen-card:hover { border-color: #999; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+    .screen-preview { height: 140px; background: var(--surface); border-radius: 8px; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 13px; }
+    .screen-name { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+    .screen-desc { font-size: 14px; color: var(--text-secondary); }
+    .back-link { display: inline-block; margin-top: 48px; padding: 10px 20px; background: #333; color: #fff; text-decoration: none; border-radius: 8px; font-size: 14px; }
+    .back-link:hover { background: #555; }
+    @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Page Gen — Wireframes</h1>
+    <p class="subtitle">Кликните на экран для просмотра wireframe</p>
+    <div class="grid">
+      <a href="login.html" class="screen-card">
+        <div class="screen-preview">[ Form centered ]</div>
+        <div class="screen-name">Login / Register</div>
+        <div class="screen-desc">Авторизация: email/пароль + Google OAuth</div>
+      </a>
+      <a href="dashboard.html" class="screen-card">
+        <div class="screen-preview">[ Header + Card grid ]</div>
+        <div class="screen-name">Dashboard</div>
+        <div class="screen-desc">Список проектов пользователя</div>
+      </a>
+      <a href="project.html" class="screen-card">
+        <div class="screen-preview">[ Breadcrumbs + List ]</div>
+        <div class="screen-name">Project Page</div>
+        <div class="screen-desc">Шаблоны проекта + подключения</div>
+      </a>
+      <a href="editor.html" class="screen-card">
+        <div class="screen-preview">[ Sidebar + Block chain ]</div>
+        <div class="screen-name">Template Editor</div>
+        <div class="screen-desc">Палитра блоков + цепочка + промпты</div>
+      </a>
+      <a href="preview.html" class="screen-card">
+        <div class="screen-preview">[ Content blocks + Actions ]</div>
+        <div class="screen-name">Preview</div>
+        <div class="screen-desc">Предпросмотр + копировать/скачать/отправить</div>
+      </a>
+      <a href="settings.html" class="screen-card">
+        <div class="screen-preview">[ Profile form + API keys ]</div>
+        <div class="screen-name">Settings</div>
+        <div class="screen-desc">Профиль, API-ключи, инструкции</div>
+      </a>
+    </div>
+    <a class="back-link" href="../flows.html">← User Flows</a>
+  </div>
+</body>
+</html>

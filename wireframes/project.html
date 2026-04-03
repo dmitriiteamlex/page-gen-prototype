@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Gen — Corporate Site</title>
+    <style>
+        :root {
+            --bg: #FFFFFF;
+            --surface: #F5F5F5;
+            --border: #E0E0E0;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --text-muted: #999;
+            --btn-primary: #333;
+            --btn-text: #FFF;
+            --radius: 8px;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #FAFAFA;
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        /* ---- Sticky Header ---- */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            height: 56px;
+            display: flex;
+            align-items: center;
+            padding: 0 32px;
+        }
+
+        .header-inner {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav a {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.15s;
+        }
+
+        .nav a:hover {
+            color: var(--text-primary);
+        }
+
+        .header-right a {
+            font-size: 14px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.15s;
+        }
+
+        .header-right a:hover {
+            color: var(--text-primary);
+        }
+
+        /* ---- Main Content ---- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 32px 32px 64px;
+        }
+
+        /* ---- Breadcrumbs ---- */
+        .breadcrumbs {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .breadcrumbs a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumbs .sep {
+            margin: 0 6px;
+            color: var(--text-muted);
+        }
+
+        .breadcrumbs .current {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* ---- Project Info ---- */
+        .project-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .project-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+        }
+
+        /* ---- Action Buttons ---- */
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            height: 40px;
+            padding: 0 20px;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: opacity 0.15s, background 0.15s;
+            text-decoration: none;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--btn-primary);
+            color: var(--btn-text);
+        }
+
+        .btn-primary:hover {
+            opacity: 0.85;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface);
+        }
+
+        /* ---- Template List ---- */
+        .template-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .template-row {
+            display: flex;
+            align-items: center;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px 20px;
+            text-decoration: none;
+            color: inherit;
+            transition: border-color 0.15s, box-shadow 0.15s;
+            position: relative;
+        }
+
+        .template-row:hover {
+            border-color: #BBB;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .template-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .template-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .template-blocks {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .template-api {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: right;
+            margin-right: 16px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .template-api.no-connection {
+            color: #B0B0B0;
+            font-style: italic;
+        }
+
+        .menu-dots {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background 0.15s;
+            position: relative;
+            z-index: 2;
+        }
+
+        .menu-dots:hover {
+            background: var(--surface);
+        }
+
+        .menu-dots svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--text-muted);
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 768px) {
+            .header {
+                padding: 0 16px;
+            }
+
+            .container {
+                padding: 24px 16px 48px;
+            }
+
+            .header-left {
+                gap: 20px;
+            }
+
+            .nav {
+                gap: 14px;
+            }
+
+            .template-row {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .template-info {
+                width: 100%;
+            }
+
+            .template-api {
+                text-align: left;
+                margin-right: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .project-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sticky Header -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="header-left">
+                <a href="index.html" class="logo">Page Gen</a>
+                <nav class="nav">
+                    <a href="dashboard.html">Dashboard</a>
+                    <a href="settings.html">Settings</a>
+                </nav>
+            </div>
+            <div class="header-right">
+                <a href="login.html">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+
+        <!-- Breadcrumbs -->
+        <div class="breadcrumbs">
+            <a href="dashboard.html">Dashboard</a>
+            <span class="sep">/</span>
+            <span class="current">Corporate Site</span>
+        </div>
+
+        <!-- Project Header -->
+        <h1 class="project-title">Corporate Site</h1>
+        <p class="project-desc">Корпоративный сайт компании</p>
+
+        <!-- Action Buttons -->
+        <div class="actions">
+            <button class="btn btn-primary">+ Новый шаблон</button>
+            <button class="btn btn-secondary">Подключения</button>
+        </div>
+
+        <!-- Template List -->
+        <div class="template-list">
+
+            <!-- Row 1 -->
+            <a href="editor.html" class="template-row">
+                <div class="template-info">
+                    <div class="template-name">Главная страница</div>
+                    <div class="template-blocks">5 блоков: Title, Text+Image, Text, Image, Text</div>
+                </div>
+                <div class="template-api">API: cms-api.example.com</div>
+                <div class="menu-dots" onclick="event.preventDefault();">
+                    <svg viewBox="0 0 16 16"><circle cx="8" cy="3" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="8" cy="13" r="1.5"/></svg>
+                </div>
+            </a>
+
+            <!-- Row 2 -->
+            <a href="editor.html" class="template-row">
+                <div class="template-info">
+                    <div class="template-name">О компании</div>
+                    <div class="template-blocks">3 блока: Title, Text+Image, Text</div>
+                </div>
+                <div class="template-api">API: cms-api.example.com</div>
+                <div class="menu-dots" onclick="event.preventDefault();">
+                    <svg viewBox="0 0 16 16"><circle cx="8" cy="3" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="8" cy="13" r="1.5"/></svg>
+                </div>
+            </a>
+
+            <!-- Row 3 -->
+            <a href="editor.html" class="template-row">
+                <div class="template-info">
+                    <div class="template-name">Контакты</div>
+                    <div class="template-blocks">2 блока: Title, Text</div>
+                </div>
+                <div class="template-api no-connection">Нет подключения</div>
+                <div class="menu-dots" onclick="event.preventDefault();">
+                    <svg viewBox="0 0 16 16"><circle cx="8" cy="3" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="8" cy="13" r="1.5"/></svg>
+                </div>
+            </a>
+
+        </div>
+
+    </main>
+
+</body>
+</html>
