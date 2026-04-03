@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Gen — User Flows</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #FAFAFA; color: #333; padding: 48px 24px; max-width: 1200px; margin: 0 auto; }
+    h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+    .subtitle { font-size: 16px; color: #666; margin-bottom: 48px; }
+    .flow-section { background: #FFF; border: 1px solid #E0E0E0; border-radius: 12px; padding: 32px; margin-bottom: 32px; }
+    .flow-section h2 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+    .flow-section p { font-size: 14px; color: #666; margin-bottom: 24px; }
+    .mermaid { display: flex; justify-content: center; overflow-x: auto; }
+    .nav-link { display: inline-block; margin-top: 32px; padding: 10px 20px; background: #333; color: #FFF; text-decoration: none; border-radius: 8px; font-size: 14px; }
+    .nav-link:hover { background: #555; }
+  </style>
+</head>
+<body>
+  <h1>Page Gen — User Flows</h1>
+  <p class="subtitle">Диаграммы пользовательских потоков</p>
+
+  <div class="flow-section">
+    <h2>1. Main User Journey</h2>
+    <p>Основной путь пользователя: от лендинга до доставки контента</p>
+    <div class="mermaid">
+flowchart LR
+    A["Landing"] --> B["Register / Login"]
+    B --> C["Dashboard"]
+    C --> D["Create Project"]
+    D --> E["Project Page"]
+    E --> F["Create Template"]
+    F --> G["Template Editor"]
+    G --> H["Add Blocks + Prompts"]
+    H --> I["Generate"]
+    I --> J["Preview"]
+    J --> K["Copy / Download / Send"]
+    </div>
+  </div>
+
+  <div class="flow-section">
+    <h2>2. Auth Flow</h2>
+    <p>Авторизация: email/пароль + Google OAuth, проверка auth_provider</p>
+    <div class="mermaid">
+flowchart TD
+    A["App Load"] --> B{"Has session?"}
+    B -->|"Yes"| C["Dashboard"]
+    B -->|"No"| D["Login Page"]
+    D --> E{"Method?"}
+    E -->|"Email"| F["Enter Email + Password"]
+    E -->|"Google"| G["Google OAuth"]
+    E -->|"New user"| H["Register Page"]
+    H --> I["Enter Name + Email + Password"]
+    I --> J["Create Account"]
+    J --> C
+    G --> K{"First time?"}
+    K -->|"Yes"| L["Auto-create account"]
+    L --> C
+    K -->|"No"| C
+    F --> M{"auth_provider?"}
+    M -->|"email"| N{"Valid credentials?"}
+    N -->|"Yes"| C
+    N -->|"No"| O["Show error"]
+    O --> D
+    M -->|"google"| P["Show: Use Google login"]
+    P --> D
+    </div>
+  </div>
+
+  <div class="flow-section">
+    <h2>3. Template Editor Flow</h2>
+    <p>Редактирование шаблона: добавление блоков, промпты, автосохранение</p>
+    <div class="mermaid">
+flowchart TD
+    A["Open Template Editor"] --> B["Block Palette visible"]
+    B --> C{"Add block?"}
+    C -->|"Drag from palette"| D["Block added to chain"]
+    C -->|"Click type"| D
+    D --> E["Click block to expand"]
+    E --> F["Fill prompt fields"]
+    F --> G["Autosave debounce 500ms"]
+    G --> H{"More blocks?"}
+    H -->|"Yes"| C
+    H -->|"No"| I["Reorder via drag-drop"]
+    I --> J["Click Generate"]
+    D --> K["Delete block X"]
+    K --> H
+    </div>
+  </div>
+
+  <div class="flow-section">
+    <h2>4. Generation Flow</h2>
+    <p>Генерация контента: проверка ключей, параллельные вызовы API, сборка JSON</p>
+    <div class="mermaid">
+flowchart TD
+    A["Click Generate"] --> B{"Has text blocks?"}
+    B -->|"Yes"| C{"OpenAI key set?"}
+    B -->|"No"| D{"Has image blocks?"}
+    C -->|"No"| E["Modal: Add API keys"]
+    E --> F["Go to Settings"]
+    C -->|"Yes"| D
+    D -->|"Yes"| G{"NanoBanana key set?"}
+    D -->|"No"| H["Start generation"]
+    G -->|"No"| E
+    G -->|"Yes"| H
+    H --> I["Call OpenAI for text"]
+    H --> J["Call NanoBanana for images"]
+    J --> K["Call OpenAI for alt_text"]
+    I --> L["Assemble JSON array"]
+    K --> L
+    L --> M["Show Preview"]
+    </div>
+  </div>
+
+  <div class="flow-section">
+    <h2>5. Delivery Flow</h2>
+    <p>Доставка контента: предпросмотр, отправка на внешний API, обработка ошибок</p>
+    <div class="mermaid">
+flowchart TD
+    A["Preview Screen"] --> B{"User action?"}
+    B -->|"Copy JSON"| C["Copy to clipboard"]
+    B -->|"Download"| D["Download .json file"]
+    B -->|"Send to API"| E{"Connection assigned?"}
+    E -->|"No"| F["Select or create connection"]
+    F --> E
+    E -->|"Yes"| G["Send HTTP request"]
+    G --> H{"Response?"}
+    H -->|"2xx Success"| I["Success toast"]
+    H -->|"Error"| J["Show error in UI"]
+    J --> K{"User can fix?"}
+    K -->|"Yes"| L["Edit connection"]
+    L --> G
+    K -->|"No"| M["Contact support dialog"]
+    </div>
+  </div>
+
+  <div style="display:flex;gap:12px;flex-wrap:wrap">
+    <a class="nav-link" href="/wireframes/index.html">Wireframes →</a>
+    <a class="nav-link" href="/dashboard.html" style="background:#ffd955;color:#000">Прототип →</a>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ startOnLoad: true, theme: 'neutral', flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' }, securityLevel: 'loose' });
+  </script>
+</body>
+</html>
